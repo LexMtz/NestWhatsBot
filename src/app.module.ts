@@ -13,31 +13,23 @@ import { MessageDataSubscriber } from './messages/subscriber/message.subscriber'
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: 'localhost',
-      port: 5432,
-      username: 'raffdevs',
-      password: 'yma2578k',
-      database: 'zap_bot',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'botwhats',
       synchronize: true,
       autoLoadEntities: true,
-      subscribers: [
-        MessageDataSubscriber
-      ],
-      entities: [
-        Schedules,
-        ScheduleGroup,
-        Ura,
-        UraOptions
-      ]
+      subscribers: [MessageDataSubscriber],
+      entities: [Schedules, ScheduleGroup, Ura, UraOptions],
     }),
     MessagesModule,
     SchedulesModule,
     BotModule,
     UraModule,
-    
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

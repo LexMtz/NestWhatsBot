@@ -12,8 +12,8 @@ export class CreateSessionService {
     @Inject(forwardRef(() => MessageFactory))
     private messageFactory: MessageFactory,
 
-    private uraFactory: UraFactory
-  ) { }
+    private uraFactory: UraFactory,
+  ) {}
 
   public get session() {
     return this.sessionWhats;
@@ -24,7 +24,6 @@ export class CreateSessionService {
   }
 
   public async startSession(): Promise<void> {
-
     await create({
       headless: true,
 
@@ -46,45 +45,42 @@ export class CreateSessionService {
 
       cacheEnabled: false,
 
-      executablePath: '/usr/bin/google-chrome',
+      // executablePath: '/usr/bin/google-chrome',
 
       popup: 5001,
 
       sessionDataPath: './tokens',
-
-    }).then(async session => {
+    }).then(async (session) => {
       this.sessionWhats = session;
 
-      session.onMessage(async message => {
+      session.onMessage(async (message) => {
         if (!message.isGroupMsg) {
           try {
-            const msg = await this.messageFactory.buildMessage(session, message);
-
-            await this.uraFactory.buildUra(
+            const msg = await this.messageFactory.buildMessage(
               session,
               message,
-              msg
             );
+
+            await this.uraFactory.buildUra(session, message, msg);
 
             if (msg.context === MessageContext.NEW) {
               await this.uraFactory.checkTime();
               await this.uraFactory.initUra();
-
             } else if (msg.context === MessageContext.URA_ANSWER) {
               await this.uraFactory.matchUraOption();
-
             } else if (msg.context === MessageContext.RATING) {
               // Implementar avaliação
             }
 
             await this.messageFactory.saveMessage(msg);
-
           } catch (error) {
-            console.log('[Error] An error ocorred while in processing message', error);
+            console.log(
+              '[Error] An error ocorred while in processing message',
+              error,
+            );
           }
         }
-
       });
     });
-  };
+  }
 }

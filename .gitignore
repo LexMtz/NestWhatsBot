@@ -27,10 +27,13 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
 # managed by open-wa
 **.data.json
 **.node-persist**
 # end managed by open-wa
 /tokens
 zap-bot.session.sql
+
+# managed
+**_IGNORE_**
+# end managed

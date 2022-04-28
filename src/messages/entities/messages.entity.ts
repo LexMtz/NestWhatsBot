@@ -1,12 +1,11 @@
-import { AfterInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { MessageContext } from "../message.model";
+import { AfterInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { MessageContext } from '../message.model';
 import { v4 as v4 } from 'uuid';
-
 
 @Entity('messages')
 export class MessageData {
   @PrimaryGeneratedColumn('increment')
-  id?: number
+  id?: number;
 
   @Column()
   contact: string;
@@ -14,7 +13,7 @@ export class MessageData {
   @Column()
   name: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   id_message?: string;
 
   @Column()
@@ -29,22 +28,21 @@ export class MessageData {
   @Column()
   type: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   media_path?: string;
 
-  @Column({type: 'time with time zone', default: 'now()'})
-  timestamp?: Date
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  timestamp?: Date;
 
   @Column()
-  context: MessageContext
+  context: MessageContext;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   agent: string;
 
   @Column()
   departament_target: string;
-  
+
   @Column({ default: v4() })
   ticket: string;
-
 }
